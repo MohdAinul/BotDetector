@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+models/*.pkl
+models/*.png
+models/metrics.json
+data/accounts.csv
+.DS_Store
