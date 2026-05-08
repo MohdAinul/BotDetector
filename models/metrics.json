@@ -1,0 +1,53 @@
+{
+  "accuracy": 100.0,
+  "auc": 1.0,
+  "cv_acc": 100.0,
+  "features": [
+    "followers_count",
+    "following_count",
+    "tweet_count",
+    "listed_count",
+    "account_age_days",
+    "has_profile_pic",
+    "has_bio",
+    "bio_length",
+    "has_url_in_bio",
+    "name_has_numbers",
+    "avg_daily_tweets",
+    "follower_following_ratio",
+    "is_verified",
+    "default_theme",
+    "geo_enabled"
+  ],
+  "importances": {
+    "has_url_in_bio": 2.190320608179009e-06,
+    "has_profile_pic": 2.7151961649085067e-06,
+    "is_verified": 5.402479043215728e-05,
+    "default_theme": 0.0019442965892964759,
+    "has_bio": 0.006176861680735155,
+    "name_has_numbers": 0.010740148546626683,
+    "geo_enabled": 0.013209801922898765,
+    "bio_length": 0.024788056153251654,
+    "following_count": 0.035020017510276766,
+    "tweet_count": 0.05810282992956925,
+    "account_age_days": 0.11718594087010835,
+    "followers_count": 0.13420375790728625,
+    "listed_count": 0.1355496523935172,
+    "follower_following_ratio": 0.18823426686719982,
+    "avg_daily_tweets": 0.27478543932202837
+  },
+  "confusion": [
+    [
+      200,
+      0
+    ],
+    [
+      0,
+      200
+    ]
+  ],
+  "n_train": 1600,
+  "n_test": 400,
+  "n_bots": 1000,
+  "n_humans": 1000
+}
