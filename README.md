@@ -1,10 +1,10 @@
-# 🤖 Social Media Bot Detector
+# Social Media Bot Detector
 
 An ML-powered dashboard to detect fake and bot social media accounts using behavioral and profile-based features. Built with Python, Scikit-learn, and Plotly Dash.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Random Forest classifier** trained on 2,000 labeled accounts (bots vs humans)
 - **15 behavioral features** — follower ratio, daily tweet rate, account age, profile completeness, and more
@@ -18,7 +18,7 @@ An ML-powered dashboard to detect fake and bot social media accounts using behav
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 BotDetector/
@@ -67,28 +67,28 @@ Then open **http://localhost:8050** in your browser.
 
 ---
 
-## 🧠 Features Used for Detection
+## Features Used for Detection
 
-| Feature | Why It Matters |
-|---|---|
-| `follower_following_ratio` | Bots follow many, gain few followers |
-| `avg_daily_tweets` | Bots tweet at inhuman rates |
-| `account_age_days` | Bot accounts are usually very new |
-| `name_has_numbers` | Bot usernames often end in random numbers |
-| `has_profile_pic` | Bots frequently skip profile pictures |
-| `is_verified` | Verified accounts are almost never bots |
-| `tweet_count` | Bots have abnormally high tweet counts |
-| `listed_count` | Real accounts get added to lists by others |
+| Feature                    | Why It Matters                             |
+| -------------------------- | ------------------------------------------ |
+| `follower_following_ratio` | Bots follow many, gain few followers       |
+| `avg_daily_tweets`         | Bots tweet at inhuman rates                |
+| `account_age_days`         | Bot accounts are usually very new          |
+| `name_has_numbers`         | Bot usernames often end in random numbers  |
+| `has_profile_pic`          | Bots frequently skip profile pictures      |
+| `is_verified`              | Verified accounts are almost never bots    |
+| `tweet_count`              | Bots have abnormally high tweet counts     |
+| `listed_count`             | Real accounts get added to lists by others |
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
-| Metric | Score |
-|---|---|
-| Accuracy | ~96% |
-| ROC-AUC | ~0.99 |
-| Cross-Val Accuracy | ~96% |
+| Metric             | Score |
+| ------------------ | ----- |
+| Accuracy           | ~96%  |
+| ROC-AUC            | ~0.99 |
+| Cross-Val Accuracy | ~96%  |
 
 ---
 
