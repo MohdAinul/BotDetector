@@ -6,3 +6,6 @@ joblib
 plotly
 dash
 python-dotenv
+pyarrow
+datasets
+huggingface_hub

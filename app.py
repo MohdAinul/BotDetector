@@ -20,17 +20,18 @@ sys.path.insert(0, ROOT)
 MODEL_PATH   = os.path.join(ROOT, "models", "bot_detector.pkl")
 SCALER_PATH  = os.path.join(ROOT, "models", "scaler.pkl")
 METRICS_PATH = os.path.join(ROOT, "models", "metrics.json")
-DATA_PATH    = os.path.join(ROOT, "data",   "accounts.csv")
+DATA_PATH = os.path.join(ROOT, "data", "accounts.parquet")
+
 # ── Auto-train if model missing ───────────────────────────────────────────────
 if not os.path.exists(MODEL_PATH):
     print("⚙️  Model not found — running training pipeline...")
     os.chdir(ROOT)
-    import generate_data
+    import load_data
     import train
 
 model  = joblib.load(MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
-df     = pd.read_csv(DATA_PATH)
+df = pd.read_parquet(DATA_PATH)
 
 with open(METRICS_PATH) as f:
     metrics = json.load(f)
@@ -85,13 +86,15 @@ fig_cm.update_layout(
 )
 
 # ── Scatter: followers vs following ──────────────────────────────────────────
+sample_df = df.sample(600, random_state=1)
 fig_scatter = px.scatter(
-    df.sample(600, random_state=1), x="following_count", y="followers_count",
-    color=df.sample(600, random_state=1)["is_bot"].map({0: "Human", 1: "Bot"}),
+    sample_df, x="friends_count", y="followers_count",
+    color=sample_df["is_bot"].map({0: "Human", 1: "Bot"}),
     color_discrete_map={"Human": HUMAN_GRN, "Bot": BOT_RED},
     opacity=0.65, title="Followers vs Following by Account Type",
-    labels={"following_count": "Following", "followers_count": "Followers", "color": "Type"},
+    labels={"friends_count": "Following", "followers_count": "Followers", "color": "Type"},
 )
+
 fig_scatter.update_layout(
     paper_bgcolor=CARD, plot_bgcolor=CARD, font_color=TEXT,
     margin=dict(l=10, r=10, t=40, b=10),
@@ -102,7 +105,7 @@ fig_scatter.update_layout(
 # ── Tweet activity histogram ──────────────────────────────────────────────────
 fig_hist = go.Figure()
 for label, color in [("Human", HUMAN_GRN), ("Bot", BOT_RED)]:
-    subset = df[df["is_bot"] == (1 if label == "Bot" else 0)]["avg_daily_tweets"]
+    subset = df[df["is_bot"] == (1 if label == "Bot" else 0)]["average_tweets_per_day"]
     fig_hist.add_trace(go.Histogram(
         x=subset.clip(upper=100), name=label,
         marker_color=color, opacity=0.75, nbinsx=40
@@ -126,7 +129,7 @@ app.layout = html.Div(style={"background": BG, "minHeight": "100vh",
     html.Div([
         html.H1("🤖 Social Media Bot Detector",
                 style={"margin": "0", "fontSize": "28px", "fontWeight": "700"}),
-        html.P("Machine Learning dashboard to identify fake/bot social media accounts",
+        html.P("ML dashboard trained on 37,438 real Twitter accounts — HuggingFace dataset",
                style={"color": SUBTEXT, "margin": "4px 0 0"}),
     ], style={"marginBottom": "28px"}),
 
@@ -242,21 +245,36 @@ def predict(n, followers, following, tweets, age, daily, pic, bio, numname, veri
     age       = age       or 1
     daily     = daily     or 0
 
-    ratio     = round(followers / following, 4) if following else 0
-    bio_len   = np.random.randint(20, 60) if bio else 0
-    listed    = max(0, int(followers * 0.01))
+    ratio   = round(followers / following, 4) if following else 0
+    bio_len = np.random.randint(20, 60) if bio else 0
 
+    # NEW — matches real dataset's 14 features exactly:
+    # followers_count, friends_count, statuses_count, favourites_count,
+    # account_age_days, average_tweets_per_day, follower_following_ratio,
+    # default_profile, default_profile_image, geo_enabled, verified,
+    # has_description, description_length, has_location
     features = np.array([[
-        followers, following, tweets, listed, age,
-        pic, bio, bio_len, 1 - bio, numname,
-        daily, ratio, verified, theme, 0
+        followers,   # followers_count
+        following,   # friends_count
+        tweets,      # statuses_count
+        0,           # favourites_count (not in UI, default 0)
+        age,         # account_age_days
+        daily,       # average_tweets_per_day
+        ratio,       # follower_following_ratio
+        theme,       # default_profile
+        1 - pic,     # default_profile_image (no pic = 1)
+        0,           # geo_enabled (not in UI, default 0)
+        verified,    # verified
+        bio,         # has_description
+        bio_len,     # description_length
+        0,           # has_location (not in UI, default 0)
     ]])
 
-    features_sc  = scaler.transform(features)
-    prob_bot     = model.predict_proba(features_sc)[0][1]
-    prob_human   = 1 - prob_bot
-    prediction   = "🤖 BOT" if prob_bot >= 0.5 else "✅ HUMAN"
-    color        = BOT_RED if prob_bot >= 0.5 else HUMAN_GRN
+    features_sc = scaler.transform(features)
+    prob_bot    = model.predict_proba(features_sc)[0][1]
+    prob_human  = 1 - prob_bot
+    prediction  = "🤖 BOT" if prob_bot >= 0.5 else "✅ HUMAN"
+    color       = BOT_RED if prob_bot >= 0.5 else HUMAN_GRN
 
     gauge = go.Figure(go.Indicator(
         mode="gauge+number+delta",

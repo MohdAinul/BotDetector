@@ -1,53 +1,70 @@
 {
-  "accuracy": 100.0,
-  "auc": 1.0,
-  "cv_acc": 100.0,
+  "best_model": "Gradient Boosting",
+  "all_results": {
+    "Logistic Regression": {
+      "accuracy": 77.18,
+      "auc": 0.8323,
+      "cv": 76.94
+    },
+    "Random Forest": {
+      "accuracy": 87.66,
+      "auc": 0.9357,
+      "cv": 87.78
+    },
+    "Gradient Boosting": {
+      "accuracy": 87.61,
+      "auc": 0.9365,
+      "cv": 87.58
+    }
+  },
+  "accuracy": 87.61,
+  "auc": 0.9365,
+  "cv_acc": 87.58,
   "features": [
     "followers_count",
-    "following_count",
-    "tweet_count",
-    "listed_count",
+    "friends_count",
+    "statuses_count",
+    "favourites_count",
     "account_age_days",
-    "has_profile_pic",
-    "has_bio",
-    "bio_length",
-    "has_url_in_bio",
-    "name_has_numbers",
-    "avg_daily_tweets",
+    "average_tweets_per_day",
     "follower_following_ratio",
-    "is_verified",
-    "default_theme",
-    "geo_enabled"
+    "default_profile",
+    "default_profile_image",
+    "geo_enabled",
+    "verified",
+    "has_description",
+    "description_length",
+    "has_location"
   ],
   "importances": {
-    "has_url_in_bio": 2.190320608179009e-06,
-    "has_profile_pic": 2.7151961649085067e-06,
-    "is_verified": 5.402479043215728e-05,
-    "default_theme": 0.0019442965892964759,
-    "has_bio": 0.006176861680735155,
-    "name_has_numbers": 0.010740148546626683,
-    "geo_enabled": 0.013209801922898765,
-    "bio_length": 0.024788056153251654,
-    "following_count": 0.035020017510276766,
-    "tweet_count": 0.05810282992956925,
-    "account_age_days": 0.11718594087010835,
-    "followers_count": 0.13420375790728625,
-    "listed_count": 0.1355496523935172,
-    "follower_following_ratio": 0.18823426686719982,
-    "avg_daily_tweets": 0.27478543932202837
+    "has_description": 0.0005587791436950946,
+    "default_profile_image": 0.0006667841424926131,
+    "has_location": 0.002107809524433367,
+    "default_profile": 0.003295189992844882,
+    "description_length": 0.014496379524894382,
+    "geo_enabled": 0.01523419890848416,
+    "verified": 0.018103749483665985,
+    "follower_following_ratio": 0.023562043346124363,
+    "statuses_count": 0.06597099906156677,
+    "average_tweets_per_day": 0.06935462454279775,
+    "account_age_days": 0.09119352188450183,
+    "friends_count": 0.09579963375308263,
+    "favourites_count": 0.1410227016002872,
+    "followers_count": 0.45863358509112906
   },
   "confusion": [
     [
-      200,
-      0
+      4660,
+      343
     ],
     [
-      0,
-      200
+      585,
+      1900
     ]
   ],
-  "n_train": 1600,
-  "n_test": 400,
-  "n_bots": 1000,
-  "n_humans": 1000
+  "n_train": 29950,
+  "n_test": 7488,
+  "n_bots": 12425,
+  "n_humans": 25013,
+  "dataset": "Real Twitter/X accounts \u2014 HuggingFace airt-ml/twitter-human-bots"
 }
