@@ -8,3 +8,5 @@ models/*.png
 models/metrics.json
 data/accounts.csv
 .DS_Store
+frontend/node_modules/
+bot-simulator/__pycache__/

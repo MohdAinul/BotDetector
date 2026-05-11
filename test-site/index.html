@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ShopEasy — Test Store</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+      }
+      .header {
+        background: #1e40af;
+        color: white;
+        padding: 16px 32px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      .card {
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        margin-bottom: 20px;
+        color: #1e293b;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+      button {
+        background: #1e40af;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+      }
+      .notice {
+        margin-top: 20px;
+        color: #64748b;
+        font-size: 12px;
+        text-align: center;
+      }
+      /* Honeypot — hidden from humans */
+      .hp-field {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
+        height: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">ShopEasy Store (BotShield Demo)</div>
+    <div class="container">
+      <div class="card">
+        <h2>Create Account</h2>
+
+        <input type="text" placeholder="Full name" />
+        <input type="email" placeholder="Email address" />
+        <input type="password" placeholder="Password" />
+
+        <!-- Honeypot field — humans never see this -->
+        <input
+          type="text"
+          id="_bs_hp"
+          class="hp-field"
+          name="website"
+          autocomplete="off"
+          tabindex="-1"
+        />
+
+        <button onclick="alert('Submitted! Check BotShield dashboard.')">
+          Create Account
+        </button>
+        <p class="notice">BotShield is watching this form silently.</p>
+      </div>
+    </div>
+
+    <!-- BotShield SDK — this is what companies paste -->
+    <script src="http://localhost:8000/sdk.js"></script>
+    <script>
+      BotShield.init("bs_test_demo123");
+    </script>
+  </body>
+</html>
