@@ -5,7 +5,6 @@ import os
 def load_and_clean():
     print("Downloading real Twitter dataset...")
     
-    # WHY HuggingFace? Free, no login, direct parquet download
     url = "https://huggingface.co/datasets/airt-ml/twitter-human-bots/resolve/refs%2Fconvert%2Fparquet/default/train/0000.parquet"
     
     try:
@@ -15,12 +14,12 @@ def load_and_clean():
         from datasets import load_dataset
         df = load_dataset("airt-ml/twitter-human-bots", split="train").to_pandas()
 
-    # WHY: Convert "bot"/"human" string to 0/1 for sklearn
+    # Convert bot/human string to 0/1 for sklearn
     df["is_bot"] = (df["account_type"] == "bot").astype(int)
 
-    # FEATURE ENGINEERING — WHY each one:
+    # FEATURE ENGINEERING
     
-    # Has bio? Real people write bios, lazy bots don't
+    # Real people write bios, bots don't
     df["has_description"] = df["description"].notna().astype(int)
     
     # Bio length — bots have empty or copy-paste spam bios
@@ -42,7 +41,7 @@ def load_and_clean():
     for col in ["default_profile", "default_profile_image", "geo_enabled", "verified"]:
         df[col] = df[col].astype(int)
 
-    # Fill nulls with median — WHY median not mean?
+    # Fill nulls with median 
     # Mean gets pulled by celebrities with 10M followers
     # Median stays stable regardless of outliers
     for col in ["followers_count","friends_count","statuses_count",

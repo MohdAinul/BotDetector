@@ -37,7 +37,7 @@ export default function App() {
             <h1
               style={{ fontSize: "20px", fontWeight: "700", color: "#f1f5f9" }}
             >
-              BotShield
+              BotDetector
             </h1>
             <p style={{ fontSize: "12px", color: "#64748b" }}>
               Real-time bot detection dashboard
@@ -93,8 +93,8 @@ export default function App() {
           fontSize: "11px",
         }}
       >
-        BotShield v1.0 · API Key: bs_test_demo123 · Polling every 3s · Backend:
-        http://localhost:8000
+        Botdetector v1.0 · API Key: bs_test_demo123 · Polling every 3s ·
+        Backend: http://localhost:8000
       </div>
     </div>
   );

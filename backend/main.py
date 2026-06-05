@@ -6,7 +6,7 @@ Docs: http://localhost:8000/docs
 
 from fastapi import FastAPI, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from pydantic import BaseModel
 from typing import List, Optional
 import time, uuid, json
@@ -215,8 +215,10 @@ def sdk():
   window.BotShield = BotShield;
 })();
 """
-    return js, 200, {"Content-Type": "application/javascript"}
-
+    return Response(
+        content=js,
+        media_type="application/javascript"
+    )
 
 @app.get("/health")
 def health():

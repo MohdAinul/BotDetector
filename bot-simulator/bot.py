@@ -47,7 +47,7 @@ def run_bot():
         }
     }
 
-    print("📡 Sending bot session to BotShield API...")
+    print(" Sending bot session to BotShield API...")
     try:
         res = requests.post("http://localhost:8000/analyse", json=payload)
         data = res.json()
@@ -57,14 +57,14 @@ def run_bot():
         print(f"  Caught By  : {data['caught_by']}")
         print(f"  Flags      : {data['flags']}")
         print(f"{'='*40}")
-        print("✅ Check dashboard at http://localhost:5173")
+        print("Check dashboard at http://localhost:5173")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
         print("Make sure backend is running: uvicorn main:app --reload --port 8000")
 
 
 def run_human():
-    print("✅ Simulating human visit...")
+    print(" Simulating human visit...")
 
     payload = {
         "session_id": generate_session(),
@@ -110,9 +110,9 @@ def run_human():
         print(f"  Bot Score  : {data['bot_score']}")
         print(f"  Flags      : {data['flags']}")
         print(f"{'='*40}")
-        print("✅ Check dashboard at http://localhost:5173")
+        print(" Check dashboard at http://localhost:5173")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
 
 
 if __name__ == "__main__":
